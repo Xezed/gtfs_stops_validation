@@ -3260,11 +3260,11 @@ def mmqgis_geometry_import_from_csv(qgis, node_filename, long_colname, lat_colna
 		if not QgsVectorFileWriter.deleteShapeFile(shapefile_name):
 			return "Failure deleting existing shapefile: " + shapefile_name
 
-	if qgis.activeLayer():
-		crs = qgis.activeLayer().crs()
-	else:
-		crs = QgsCoordinateReferenceSystem()
-		crs.createFromSrid(4326) # WGS 84
+	# if qgis.activeLayer():
+	# 	crs = qgis.activeLayer().crs()
+	# else:
+	crs = QgsCoordinateReferenceSystem()
+	crs.createFromSrid(4326) # WGS 84
 
 	fields = QgsFields()
 	fields.append(QgsField(shapeid_colname, QVariant.String))
@@ -3293,7 +3293,7 @@ def mmqgis_geometry_import_from_csv(qgis, node_filename, long_colname, lat_colna
 				and mmqgis_is_float(row[long_col]) and mmqgis_is_float(row[lat_col]):
 			node_count += 1
 			if (node_count % 10) == 0:
-				mmqgis_status_message(qgis, "Importing node " + unicode(node_count))
+				print "Importing node " + unicode(node_count)
 			point = QgsPoint(float(row[long_col]), float(row[lat_col]))
 		else:
 			point = False
@@ -3357,7 +3357,7 @@ def mmqgis_geometry_import_from_csv(qgis, node_filename, long_colname, lat_colna
 	if addlayer:
 		qgis.addVectorLayer(shapefile_name, os.path.basename(shapefile_name), "ogr")
 
-	mmqgis_completion_message(qgis, "Loaded " + unicode(shape_count) + " shapes (" + unicode(node_count) + " nodes)")
+	print "Loaded " + unicode(shape_count) + " shapes (" + unicode(node_count) + " nodes)"
 
 	return None
 

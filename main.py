@@ -31,7 +31,7 @@ def main():
     # dbf = Dbf5('Cenefas.dbf')
     # dbf = dbf.to_dataframe()
 
-    geo =ml.mmqgis_geometry_import_from_csv('adsf', 'output.txt', 'stop_lat', 'stop_lon',
+    geo = ml.mmqgis_geometry_import_from_csv('adsf', 'output.txt', 'stop_lat', 'stop_lon',
                                             'stop_id', 'Point','output.shp', False)
     print geo
 
