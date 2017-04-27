@@ -3,6 +3,9 @@ import re
 import utm
 import sys
 
+from simpledbf import Dbf5
+from mmqgis import mmqgis_library as ml
+
 
 def main():
     input_file = sys.argv[1]
@@ -20,10 +23,17 @@ def main():
         df = df.apply(id_lon_lat, axis=1)
         df = pd.DataFrame(df.tolist(), columns=['stop_id', 'stop_lat', 'stop_lon'], index=df.index)
 
-        df.to_csv('output.txt', index=False)
+        df = df.to_csv(index=False)
 
+    else:
+        df = pd.read_csv(input_file)
 
+    # dbf = Dbf5('Cenefas.dbf')
+    # dbf = dbf.to_dataframe()
 
+    geo =ml.mmqgis_geometry_import_from_csv('adsf', 'output.txt', 'stop_lat', 'stop_lon',
+                                            'stop_id', 'Point','output.shp', False)
+    print geo
 
 
 if __name__ == '__main__':
